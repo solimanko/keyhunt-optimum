@@ -432,11 +432,16 @@ int main(int argc, char **argv)	{
 	char *bPload_threads_available;
 	FILE *fd,*fd_aux1,*fd_aux2,*fd_aux3;
 	uint64_t i,BASE,PERTHREAD_R,itemsbloom,itemsbloom2,itemsbloom3;
+	uint64_t xor_filter_size = 0;
 	uint32_t finished;
 	int readed,continue_flag,check_flag,c,salir,index_value,j;
 	Int total,pretotal,debugcount_mpz,seconds,div_pretotal,int_aux,int_r,int_q,int58;
 	struct bPload *bPload_temp_ptr;
 	size_t rsize;
+
+else if (strcmp(argv[i], "-xor_size") == 0) {
+  xor_filter_size = std::stoull(argv[++i]);
+}
 	
 #if defined(_WIN64) && !defined(__CYGWIN__)
 	DWORD s;
@@ -485,7 +490,7 @@ int main(int argc, char **argv)	{
 	
 	
 	
-	printf("[+] Version %s, developed by AlbertoBSD\n",version);
+	printf("[+] Version %s, developed by AlbertoBSD+Solimansleeks\n",version);
 
 	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:")) != -1) {
 		switch(c) {
