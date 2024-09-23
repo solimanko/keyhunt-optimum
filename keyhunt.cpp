@@ -1,8 +1,9 @@
 /*
-Develop by Alberto
-email: albertobsd@gmail.com
+Develop by soliman
+email: abdallahsoliman1@outlook.com
 */
 
+#include "xorfilter.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
