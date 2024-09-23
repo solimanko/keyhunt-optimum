@@ -1,3 +1,8 @@
+/*
+Develop by soliman
+email: abdallahsoliman1@outlook.com
+*/
+
 // xorfilter.h
 #pragma once
 #include <vector>
