@@ -3,6 +3,7 @@ Develop by soliman
 email: abdallahsoliman1@outlook.com
 */
 
+#include <cmath>
 #include "xorfilter.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -56,6 +57,7 @@ email: abdallahsoliman1@outlook.com
 #define MODE_PUB2RMD 4
 #define MODE_MINIKEYS 5
 #define MODE_VANITY 6
+#define MODE_PUZZLE 8
 
 #define SEARCH_UNCOMPRESS 0
 #define SEARCH_COMPRESS 1
@@ -413,6 +415,17 @@ Int lambda,lambda2,beta,beta2;
 
 Secp256K1 *secp;
 
+int puzzle_number = 0;
+char puzzle_range_start[17] = {0};
+char puzzle_range_end[17] = {0};
+
+void calculate_puzzle_range(int puzzle_number, char* start_range, char* end_range) {
+    uint64_t start = (uint64_t)pow(2, puzzle_number - 1);
+    uint64_t end = (uint64_t)pow(2, puzzle_number) - 1;
+    sprintf(start_range, "%016lx", start);
+    sprintf(end_range, "%016lx", end);
+}
+
 int main(int argc, char **argv)	{
 	char buffer[2048];
 	char rawvalue[32];
@@ -492,7 +505,8 @@ else if (strcmp(argv[i], "-xor_size") == 0) {
 	
 	printf("[+] Version %s, developed by AlbertoBSD+Solimansleeks\n",version);
 
-	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:")) != -1) {
+	while ((c = getopt(argc, argv, "deh6MqRSB:b:c:C:E:f:I:k:l:m:N:n:p:r:s:t:v:G:8:z:P:")) != -1) {
+		
 		switch(c) {
 			case 'h':
 				menu();
@@ -511,6 +525,20 @@ else if (strcmp(argv[i], "-xor_size") == 0) {
 					fprintf(stderr,"[W] Ignoring unknow bsgs mode %s\n",optarg);
 				}
 			break;
+			case 'P':
+                                 puzzle_number = atoi(optarg);
+                                 if (puzzle_number < 1 || puzzle_number > 256) {
+                                     fprintf(stderr, "[E] Invalid puzzle number. Must be between 1 and 256.\n");
+                                     exit(EXIT_FAILURE);
+                                     }
+                                     calculate_puzzle_range(puzzle_number, puzzle_range_start, puzzle_range_end);
+                                     FLAGRANGE = 1;
+                                     rangeStart = puzzle_range_start;
+                                     rangeEnd = puzzle_range_end;
+                                     printf("[+] Puzzle mode enabled for puzzle %d\n", puzzle_number);
+                                     printf("[+] Range start: %s\n", rangeStart);
+                                     printf("[+] Range end: %s\n", rangeEnd);
+                        break;
 			case 'b':
 				bitrange = strtol(optarg,NULL,10);
 				if(bitrange > 0 && bitrange <=256 )	{
@@ -5748,6 +5776,7 @@ void menu() {
 	printf("\nUsage:\n");
 	printf("-h          show this help\n");
 	printf("-B Mode     BSGS now have some modes <sequential, backward, both, random, dance>\n");
+	printf("-p puzzleNumber  : Puzzle mode (number between 1 and 256)\n");
 	printf("-b bits     For some puzzles you only need some numbers of bits in the test keys.\n");
 	printf("-c crypto   Search for specific crypto. <btc, eth> valid only w/ -m address\n");
 	printf("-C mini     Set the minikey Base only 22 character minikeys, ex: SRPqx8QiwnW4WNWnTVa2W5\n");
