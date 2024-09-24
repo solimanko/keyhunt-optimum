@@ -2,7 +2,7 @@
 Develop by soliman
 email: abdallahsoliman1@outlook.com
 */
-
+#include <cstring>
 #include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
@@ -708,17 +708,17 @@ int main(int argc, char **argv)	{
 					stringtokenizer(optarg,&t);
 					switch(t.n)	{
 						case 1:
-							range_start = nextToken(&t);
+							strncpy(range_start, nextToken(&t), sizeof(range_start) - 1); range_start[sizeof(range_start) - 1] = '\0';
 							if(isValidHex(range_start)) {
 								FLAGRANGE = 1;
-								range_end = secp->order.GetBase16();
+								strncpy(range_end, secp->order.GetBase16(), sizeof(range_end) - 1); range_end[sizeof(range_end) - 1] = '\0';
 							}
 							else	{
 								fprintf(stderr,"[E] Invalid hexstring : %s.\n",range_start);
 							}
 						break;
 						case 2:
-							range_start = nextToken(&t);
+							strncpy(range_start, nextToken(&t), sizeof(range_start) - 1); range_start[sizeof(range_start) - 1] = '\0';
 							range_end	 = nextToken(&t);
 							if(isValidHex(range_start) && isValidHex(range_end)) {
 									FLAGRANGE = 1;
