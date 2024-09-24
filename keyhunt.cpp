@@ -419,13 +419,15 @@ char puzzle_range_start[17] = {0};
 char puzzle_range_end[17] = {0};
 
 void calculate_puzzle_range(int puzzle_number, char* start_range, char* end_range) {
-    uint64_t start = (uint64_t)pow(2, puzzle_number - 1);
-    uint64_t end = (uint64_t)pow(2, puzzle_number) - 1;
+    uint64_t start = 1ULL << (puzzle_number - 1);
+    uint64_t end = (1ULL << puzzle_number) - 1;
     snprintf(start_range, 17, "%016lx", start);
     snprintf(end_range, 17, "%016lx", end);
 }
 
 int main(int argc, char **argv)	{
+	char range_start[17] = {0};
+        char range_end[17] = {0};
 	char buffer[2048];
 	char rawvalue[32];
 	struct tothread *tt;	//tothread
@@ -522,13 +524,11 @@ int main(int argc, char **argv)	{
 			case 'P':
                                  puzzle_number = atoi(optarg);
                                  if (puzzle_number < 1 || puzzle_number > 256) {
-                                     fprintf(stderr, "[E] Invalid puzzle number. Must be between 1 and 256.\n");
+			             fprintf(stderr, "[E] Invalid puzzle number. Must be between 1 and 256.\n");
                                      exit(EXIT_FAILURE);
                                      }
-                                     calculate_puzzle_range(puzzle_number, puzzle_range_start, puzzle_range_end);
+                                     calculate_puzzle_range(puzzle_number, range_start, range_end);
                                      FLAGRANGE = 1;
-                                     rangeStart = puzzle_range_start;
-                                     rangeEnd = puzzle_range_end;
                                      printf("[+] Puzzle mode enabled for puzzle %d\n", puzzle_number);
                                      printf("[+] Range start: %s\n", range_start);
                                      printf("[+] Range end: %s\n", range_end);
