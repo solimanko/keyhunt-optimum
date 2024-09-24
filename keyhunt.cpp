@@ -4,7 +4,6 @@ email: abdallahsoliman1@outlook.com
 */
 
 #include <cmath>
-#include "xorfilter.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -445,16 +444,11 @@ int main(int argc, char **argv)	{
 	char *bPload_threads_available;
 	FILE *fd,*fd_aux1,*fd_aux2,*fd_aux3;
 	uint64_t i,BASE,PERTHREAD_R,itemsbloom,itemsbloom2,itemsbloom3;
-	uint64_t xor_filter_size = 0;
 	uint32_t finished;
 	int readed,continue_flag,check_flag,c,salir,index_value,j;
 	Int total,pretotal,debugcount_mpz,seconds,div_pretotal,int_aux,int_r,int_q,int58;
 	struct bPload *bPload_temp_ptr;
 	size_t rsize;
-
-else if (strcmp(argv[i], "-xor_size") == 0) {
-  xor_filter_size = std::stoull(argv[++i]);
-}
 	
 #if defined(_WIN64) && !defined(__CYGWIN__)
 	DWORD s;
