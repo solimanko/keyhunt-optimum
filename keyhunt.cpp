@@ -434,6 +434,8 @@ int main(int argc, char **argv)	{
 	char *hextemp = NULL;
 	char *aux = NULL;
 	char *aux2 = NULL;
+	char *rangeStart = NULL;
+        char *rangeEnd = NULL;
 	char *pointx_str = NULL;
 	char *pointy_str = NULL;
 	char *str_seconds = NULL;
