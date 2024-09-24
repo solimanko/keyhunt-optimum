@@ -530,8 +530,8 @@ int main(int argc, char **argv)	{
                                      rangeStart = puzzle_range_start;
                                      rangeEnd = puzzle_range_end;
                                      printf("[+] Puzzle mode enabled for puzzle %d\n", puzzle_number);
-                                     printf("[+] Range start: %s\n", rangeStart);
-                                     printf("[+] Range end: %s\n", rangeEnd);
+                                     printf("[+] Range start: %s\n", range_start);
+                                     printf("[+] Range end: %s\n", range_end);
                         break;
 			case 'b':
 				bitrange = strtol(optarg,NULL,10);
