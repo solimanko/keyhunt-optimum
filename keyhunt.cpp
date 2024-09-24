@@ -2,7 +2,6 @@
 Develop by soliman
 email: abdallahsoliman1@outlook.com
 */
-#include <cstring>
 #include <cmath>
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,6 +34,7 @@ email: abdallahsoliman1@outlook.com
 #include <unistd.h>
 #include <pthread.h>
 #include <sys/random.h>
+#include <cstring>
 #endif
 
 #ifdef __unix__
@@ -718,8 +718,8 @@ int main(int argc, char **argv)	{
 							}
 						break;
 						case 2:
-							strncpy(range_start, nextToken(&t), sizeof(range_start) - 1); range_start[sizeof(range_start) - 1] = '\0';
-							range_end	 = nextToken(&t);
+                                                        strncpy(range_start, nextToken(&t), sizeof(range_start) - 1); range_start[sizeof(range_start) - 1] = '\0';
+                                                        strncpy(range_end, nextToken(&t), sizeof(range_end) - 1); range_end[sizeof(range_end) - 1] = '\0';
 							if(isValidHex(range_start) && isValidHex(range_end)) {
 									FLAGRANGE = 1;
 							}
