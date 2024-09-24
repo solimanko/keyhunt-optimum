@@ -422,8 +422,8 @@ char puzzle_range_end[17] = {0};
 void calculate_puzzle_range(int puzzle_number, char* start_range, char* end_range) {
     uint64_t start = (uint64_t)pow(2, puzzle_number - 1);
     uint64_t end = (uint64_t)pow(2, puzzle_number) - 1;
-    sprintf(start_range, "%016lx", start);
-    sprintf(end_range, "%016lx", end);
+    snprintf(start_range, 17, "%016lx", start);
+    snprintf(end_range, 17, "%016lx", end);
 }
 
 int main(int argc, char **argv)	{
