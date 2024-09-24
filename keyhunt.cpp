@@ -423,6 +423,16 @@ void calculate_puzzle_range(int puzzle_number, char* start_range, char* end_rang
     uint64_t end = (1ULL << puzzle_number) - 1;
     snprintf(start_range, 17, "%016lx", start);
     snprintf(end_range, 17, "%016lx", end);
+    printf("[+] Puzzle %d range: %s to %s\n", puzzle_number, start_range, end_range);
+}
+
+void update_progress(uint64_t current, uint64_t start, uint64_t end, std::chrono::steady_clock::time_point start_time) {
+    double progress = (double)(current - start) / (end - start) * 100.0;
+    auto current_time = std::chrono::steady_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::seconds>(current_time - start_time).count();
+    
+    printf("\rProgress: %.2f%% | Keys: %" PRIu64 " | Time: %lds", progress, current - start, duration);
+    fflush(stdout);
 }
 
 int main(int argc, char **argv)	{
@@ -451,6 +461,31 @@ int main(int argc, char **argv)	{
 	Int total,pretotal,debugcount_mpz,seconds,div_pretotal,int_aux,int_r,int_q,int58;
 	struct bPload *bPload_temp_ptr;
 	size_t rsize;
+
+	if (FLAGPUZZLE) {
+        calculate_puzzle_range(puzzle_number, range_start, range_end);
+        uint64_t start = strtoull(range_start, NULL, 16);
+        uint64_t end = strtoull(range_end, NULL, 16);
+        uint64_t current = start;
+        bool found = false;
+        auto start_time = std::chrono::steady_clock::now();
+
+        while (current <= end) {
+            // Existing key checking logic
+            // ...
+
+            if (current % 1000000 == 0) {
+                update_progress(current, start, end, start_time);
+            }
+
+            current++;
+        }
+
+        printf("\nPuzzle %d search completed.\n", puzzle_number);
+        if (!found) {
+            printf("No matches found.\n");
+        }
+    }
 	
 #if defined(_WIN64) && !defined(__CYGWIN__)
 	DWORD s;
